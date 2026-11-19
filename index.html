@@ -935,7 +935,7 @@ async function refreshWx(){
 refreshWx();
 window.addEventListener("online",refreshWx);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-new Date(wxData.updatedAt)>3*3600e3)refreshWx()});
-if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(r=>{r.update();document.addEventListener("visibilitychange",()=>{if(!document.hidden)r.update()})}).catch(()=>{}))}
 
 </script>
 
